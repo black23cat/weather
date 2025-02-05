@@ -17,23 +17,28 @@ class CityWeather {
     this.tempFeelsLike = obj.days[0].feelslike;
     this.lowTemp = obj.days[0].feelslikemin;
     this.highTemp = obj.days[0].feelslikemax;
+    this.uvIndex = obj.days[0].uvindex;
     this.rainChance = obj.days[0].precipprob;
-    this.humidity = obj.days[0].humidity;
+    this.rainCover = obj.days[0].precipcover;
     this.weatherType = obj.days[0].preciptype;
     this.currentCondition = obj.days[0].conditions;
     this.sunrise = obj.days[0].sunrise;
     this.sunset = obj.days[0].sunset;
+    this.icon = obj.days[0].icon;
     this.hourlyForecast = [];
     this.weekForecast = [];
   }
   updateHourlyData(obj) {
-    for (let i = 7; i < 19; i++) {
-      const hourlyData = {
-        temp: obj.days[0].hours[i].temp,
-        datetime: obj.days[0].hours[i].datetime,
-        condition: obj.days[0].hours[i].conditions,
-      };
-      this.hourlyForecast.push(hourlyData);
+    for (let i = 0; i < 24; i++) {
+      if (i % 2 === 1) {
+        const hourlyData = {
+          temp: obj.days[0].hours[i].temp,
+          datetime: obj.days[0].hours[i].datetime,
+          condition: obj.days[0].hours[i].conditions,
+          icon: obj.days[0].hours[i].icon,
+        };
+        this.hourlyForecast.push(hourlyData);
+      }
     }
   }
 
@@ -46,6 +51,8 @@ class CityWeather {
         date: daysArr[i].datetime,
         temp: daysArr[i].temp,
         condition: daysArr[i].conditions,
+        description: daysArr[i].description,
+        icon: daysArr[i].icon,
       };
       this.weekForecast.push(weekData);
     }

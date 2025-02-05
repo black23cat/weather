@@ -1,3 +1,11 @@
 header{
   display: flex;
 }
+
+div.content div{
+  border: 1px solid red;
+}
+
+div.content img{
+  width: 120px;
+}
