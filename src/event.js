@@ -16,14 +16,13 @@ export default function event() {
     if (e.target.id === 'submit' && searchValue !== '') {
       weather.getWeatherData(searchValue).then((result) => {
         const data = result;
-        content.append(
-          dom.generateMainWeatherInfo(data),
-          dom.generateDetailWeatherInfo(data),
-          dom.generateHourlyHighlight(data),
-          dom.generateWeekForecast(data)
-        );
+        dom.updateScreen(data, content);
       });
       form.reset();
     }
   }
+  weather.getWeatherData('Jakarta').then((result) => {
+    const data = result;
+    dom.updateScreen(data, content);
+  });
 }

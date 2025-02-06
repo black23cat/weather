@@ -48,9 +48,7 @@ class CityWeather {
     for (let i = 1; i < daysArr.length; i++) {
       const weekData = {
         currentDay: format(add(todayDate, { days: i }), 'EEEE'),
-        date: daysArr[i].datetime,
         temp: daysArr[i].temp,
-        condition: daysArr[i].conditions,
         description: daysArr[i].description,
         icon: daysArr[i].icon,
       };

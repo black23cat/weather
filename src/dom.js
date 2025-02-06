@@ -7,52 +7,46 @@ export default function Dom() {
     const wrapper = document.createElement('div');
     const city = document.createElement('h3');
     const daysAndDate = document.createElement('h3');
+    const tempWrapper = document.createElement('div');
+    const weatherConditionPara = document.createElement('p');
+    const lowHighTemp = document.createElement('p');
+    const tempFeelsLike = document.createElement('div');
+    const rainChance = document.createElement('p');
+    const rainCover = document.createElement('p');
+    const uvIndex = document.createElement('p');
+
     const sunrise = document.createElement('p');
     const sunset = document.createElement('p');
     const description = document.createElement('p');
+
     city.textContent = `${obj.address}`;
     daysAndDate.textContent = `${obj.currentDay}, ${format(obj.date, 'PP').slice(0, -6)}`;
+    tempWrapper.innerHTML = `<span class="temperature">${obj.temp}</span><span class = "temperature-unit">C</span>`;
+    weatherConditionPara.textContent = `${obj.currentCondition}`;
+    lowHighTemp.innerHTML = `<span>${obj.highTemp}</span>/<span>${obj.lowTemp}<span>C</span>`;
+    tempFeelsLike.innerHTML = `Feelslike<span>${obj.tempFeelsLike}</span><span>C</span>`;
+    rainChance.innerHTML = `Rain Chance ${obj.rainChance}%`;
+    rainCover.innerHTML = `Rain Cover ${obj.rainCover}%`;
+    uvIndex.innerHTML = `UV Index ${obj.uvIndex}`;
     sunrise.textContent = `Sunrise ${obj.sunrise.slice(0, -3)} AM`;
     sunset.textContent = `Sunset ${obj.sunset.slice(0, -3)} PM`;
     description.textContent = `${obj.description}`;
-    wrapper.append(city, daysAndDate, sunrise, sunset, description);
 
-    return wrapper;
-  }
-
-  function generateDetailWeatherInfo(obj) {
-    const wrapper = document.createElement('div');
-    const tempWrapper = document.createElement('div');
-    const weatherConditionWrapper = document.createElement('div');
-    const weatherConditionIcon = document.createElement('img');
-    const weatherConditionPara = document.createElement('p');
-    const rainChance = document.createElement('p');
-
-    const rainCover = document.createElement('p');
-    const highTemp = document.createElement('p');
-    const lowTemp = document.createElement('p');
-    const tempFeelsLike = document.createElement('div');
-    const uvIndex = document.createElement('p');
-    tempWrapper.innerHTML = `<span class="temperature">${obj.temp}</span><span class = "temperature-unit">C</span>`;
-    weatherConditionIcon.src = icon.getIcon(obj.icon);
-    weatherConditionPara.textContent = `${obj.currentCondition}`;
-    rainChance.innerHTML = `Rain Chance ${obj.rainChance}%`;
-    rainCover.innerHTML = `Rain Cover ${obj.rainCover}%`;
-    highTemp.innerHTML = `High <span>${obj.highTemp}</span><span>C</span>`;
-    lowTemp.innerHTML = `Low <span>${obj.lowTemp}</span><span>C</span>`;
-    tempFeelsLike.innerHTML = `Feelslike<span>${obj.tempFeelsLike}</span><span>C</span>`;
-    uvIndex.innerHTML = `UV Index ${obj.uvIndex}`;
-    weatherConditionWrapper.append(weatherConditionIcon, weatherConditionPara);
+    tempWrapper.append(lowHighTemp);
     wrapper.append(
+      city,
+      daysAndDate,
       tempWrapper,
-      weatherConditionWrapper,
+      weatherConditionPara,
+      tempFeelsLike,
       rainChance,
       rainCover,
-      highTemp,
-      lowTemp,
-      tempFeelsLike,
-      uvIndex
+      uvIndex,
+      sunrise,
+      sunset,
+      description
     );
+
     return wrapper;
   }
 
@@ -63,11 +57,18 @@ export default function Dom() {
       const hourlyCardWrapper = document.createElement('div');
       const temp = document.createElement('p');
       const weatherConditionIcon = document.createElement('img');
+      const weatherConditionPara = document.createElement('p');
       const time = document.createElement('p');
       temp.innerHTML = `<span>${hour.temp}</span><span>C</span>`;
       weatherConditionIcon.src = icon.getIcon(hour.icon);
+      weatherConditionPara.textContent = `${hour.condition}`;
       time.textContent = `${hour.datetime.slice(0, 2)} AM/PM`;
-      hourlyCardWrapper.append(time, weatherConditionIcon, temp);
+      hourlyCardWrapper.append(
+        time,
+        weatherConditionIcon,
+        temp,
+        weatherConditionPara
+      );
       hourlyDetailWrapper.append(hourlyCardWrapper);
     });
     return hourlyDetailWrapper;
@@ -98,12 +99,9 @@ export default function Dom() {
     return weekForecastWrapper;
   }
 
-  console.log(weatherIcon);
-  console.log(weatherIcon['rain']);
-  return {
-    generateMainWeatherInfo,
-    generateDetailWeatherInfo,
-    generateHourlyHighlight,
-    generateWeekForecast,
-  };
+  function updateScreen(obj, parentNode) {
+    parentNode.textContent = '';
+    parentNode.append(generateMainWeatherInfo(obj));
+  }
+  return { updateScreen };
 }
