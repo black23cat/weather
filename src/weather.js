@@ -4,7 +4,7 @@ const todayDate = lightFormat(new Date(), 'yyyy-MM-dd');
 const currentDay = format(todayDate, 'EEEE');
 const weekAfterTodayDate = lightFormat(
   add(todayDate, { days: 7 }),
-  'yyyy-MM-dd'
+  'yyyy-MM-dd',
 );
 
 class CityWeather {
@@ -28,6 +28,7 @@ class CityWeather {
     this.hourlyForecast = [];
     this.weekForecast = [];
   }
+
   updateHourlyData(obj) {
     for (let i = 0; i < 24; i++) {
       if (i % 2 === 1) {
@@ -62,7 +63,7 @@ export default function Weather() {
     try {
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}/${todayDate}T00:00:00/${weekAfterTodayDate}/?unitGroup=metric&key=WJNQVWFAP9JQ63V8MZ6VUSYGN`,
-        { mode: 'cors' }
+        { mode: 'cors' },
       );
       const result = await response.json();
       const data = new CityWeather(result);
