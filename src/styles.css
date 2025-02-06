@@ -53,11 +53,11 @@ button#submit{
   height: 100%;
 }
 
-input#submit{
-  cursor: pointer;
+button#submit img{
+  z-index: -1;
 }
 
-::placeholder{
+input#search::placeholder{
   color: white;
   opacity: 1;
 }
@@ -92,7 +92,7 @@ div.main-weather-info .condition-wrapper{
 }
 
 div.main-weather-info .main-icon{
-  width: 200px;
+  width: 300px;
 }
 
 div.main-weather-info .main-temp{
