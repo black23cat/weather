@@ -1,10 +1,11 @@
 html{
-
+  position: relative;
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.45);
 }
 body{
   background-repeat: no-repeat ;
   background-size: 100% 100%;
+  background-attachment: fixed;
   font: 1.1rem "Comic Neue", serif;
   text-align: center;
   min-height: 100vh;
@@ -12,10 +13,19 @@ body{
   color: white;
 }
 
+.content{
+  margin: auto;
+  width: 80%;
+}
+
 header{
+  background-color: rgba(0, 0, 0, 0.637);
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 10%;
 }
 
 form div{
@@ -63,10 +73,9 @@ input#search::placeholder{
 }
 
 
-div.main-weather-info, header{
-  width: 80%;
-  margin: auto;
-  margin: 30px auto;
+div.main-weather-info{
+
+  margin: 60px auto;
 }
 
 div.main-weather-info > * {
@@ -113,4 +122,37 @@ div.main-weather-info .weather-detail{
   display: flex;
   gap: 25px;
   justify-content: center;
+}
+
+.hourly-forecast-wrapper {
+  margin: 20px auto;
+  display: grid;
+
+  grid-auto-flow: column;
+  gap: 20px;
+
+}
+
+.hourly-forecast-card{
+  flex-shrink: 1;
+  position: relative;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  text-align: left;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.hourly-forecast-card img {
+  width: 60px;
+  margin: 20px 0;
+}
+
+.hourly-forecast-card:hover{
+  top: -5px;
+  transition: 0.5s;
+  background-color: rgba(255, 255, 255, 0.2);
 }

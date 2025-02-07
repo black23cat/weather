@@ -3,8 +3,10 @@ import weatherIcon from './weather-icon.js';
 import background from './bg-images.js';
 
 export default function Dom() {
+  //get icon and bg images object
   const icon = weatherIcon;
   const bgImages = background;
+  // Main weather info DOM
   function generateMainWeatherInfo(obj) {
     const body = document.querySelector('body');
     const wrapper = document.createElement('div');
@@ -26,6 +28,7 @@ export default function Dom() {
     const uvIndex = document.createElement('p');
     const sunrise = document.createElement('p');
     const sunset = document.createElement('p');
+    //Main weather info attributes and textContent
     body.style.backgroundImage = `url('${bgImages.getBgImage(new Date().getHours())}')`;
     wrapper.setAttribute('class', 'main-weather-info');
     weatherHeader.setAttribute('class', 'weather-header');
@@ -38,7 +41,7 @@ export default function Dom() {
     mainTemp.textContent = `${obj.temp} \u00B0`;
     mainTemp.setAttribute('class', 'main-temp');
     weatherConditionPara.textContent = `${obj.currentCondition}.`;
-    lowHighTemp.textContent = `${obj.highTemp} \u00B0 / ${obj.lowTemp} \u00B0`;
+    lowHighTemp.textContent = `${obj.lowTemp} \u00B0 / ${obj.highTemp} \u00B0 `;
     lowHighTemp.setAttribute('class', 'low-high-temp');
     paraWrapper.setAttribute('class', 'detail-para-wrapper');
     weatherDetailWrapper.setAttribute('class', 'weather-detail');
@@ -50,6 +53,7 @@ export default function Dom() {
     sunset.textContent = `Sunset ${obj.sunset.slice(0, -3)} PM`;
     description.textContent = `${obj.description}`;
 
+    // appending all element to wrapper and returning the wrapper
     weatherHeader.append(city, daysAndDate);
     tempWrapper.append(mainTemp, lowHighTemp);
     paraWrapper.append(weatherConditionPara, description);
@@ -71,58 +75,39 @@ export default function Dom() {
     return wrapper;
   }
 
-  // function generateHourlyHighlight(obj) {
-  //   const hourlyDetailWrapper = document.createElement('div');
-  //   const hourlyDetail = obj.hourlyForecast;
-  //   hourlyDetail.forEach((hour) => {
-  //     const hourlyCardWrapper = document.createElement('div');
-  //     const temp = document.createElement('p');
-  //     const weatherConditionIcon = document.createElement('img');
-  //     const weatherConditionPara = document.createElement('p');
-  //     const time = document.createElement('p');
-  //     temp.innerHTML = `<span>${hour.temp}</span><span>C</span>`;
-  //     weatherConditionIcon.src = icon.getIcon(hour.icon);
-  //     weatherConditionPara.textContent = `${hour.condition}`;
-  //     time.textContent = `${hour.datetime.slice(0, 2)} AM/PM`;
-  //     hourlyCardWrapper.append(
-  //       time,
-  //       weatherConditionIcon,
-  //       temp,
-  //       weatherConditionPara,
-  //     );
-  //     hourlyDetailWrapper.append(hourlyCardWrapper);
-  //   });
-  //   return hourlyDetailWrapper;
-  // }
+  function generateHourlyHighlight(obj) {
+    const hourlyDetailWrapper = document.createElement('div');
+    hourlyDetailWrapper.setAttribute('class', 'hourly-forecast-wrapper');
+    const hourlyDetail = obj.hourlyForecast;
+    hourlyDetail.forEach((hour) => {
+      const hourlyCardWrapper = document.createElement('div');
+      const temp = document.createElement('p');
+      const weatherConditionIcon = document.createElement('img');
+      const weatherConditionPara = document.createElement('p');
+      const time = document.createElement('p');
+      hourlyCardWrapper.setAttribute('class', 'hourly-forecast-card');
+      temp.textContent = `${hour.temp}\u00B0`;
+      weatherConditionIcon.src = icon.getIcon(hour.icon);
+      weatherConditionPara.textContent = `${hour.description}`;
+      time.textContent = `${hour.datetime.slice(0, 5)}`;
+      hourlyCardWrapper.append(
+        time,
+        weatherConditionIcon,
+        temp,
+        weatherConditionPara,
+      );
+      hourlyDetailWrapper.append(hourlyCardWrapper);
+    });
+    return hourlyDetailWrapper;
+  }
 
-  // function generateWeekForecast(obj) {
-  //   const dailyData = obj.weekForecast;
-  //   const weekForecastWrapper = document.createElement('div');
-  //   dailyData.forEach((day) => {
-  //     const dailyForecastWrapper = document.createElement('div');
-  //     const currentDay = document.createElement('p');
-  //     const temp = document.createElement('p');
-  //     const weatherConditionIcon = document.createElement('img');
-  //     const description = document.createElement('p');
-  //     currentDay.textContent = day.currentDay;
-  //     temp.innerHTML = `${day.temp} <span>C</span>`;
-  //     weatherConditionIcon.src = icon.getIcon(day.icon);
-  //     description.textContent = day.description;
-
-  //     dailyForecastWrapper.append(
-  //       currentDay,
-  //       temp,
-  //       weatherConditionIcon,
-  //       description,
-  //     );
-  //     weekForecastWrapper.append(dailyForecastWrapper);
-  //   });
-  //   return weekForecastWrapper;
-  // }
-
+  // initialize funtion to update screen
   function updateScreen(obj, parentNode) {
     parentNode.textContent = '';
-    parentNode.append(generateMainWeatherInfo(obj));
+    parentNode.append(
+      generateMainWeatherInfo(obj),
+      generateHourlyHighlight(obj),
+    );
   }
   return { updateScreen };
 }

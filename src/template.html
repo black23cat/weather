@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather</title>
+    <link rel="icon" href="./icon/partly-cloudy-day.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,13 +14,14 @@
   </head>
   <body>
     <header>
-      <form novalidate>
+      <form method="dialog">
         <div>
           <input
             type="search"
             name="search"
             id="search"
             placeholder="Search city..."
+            minlength="1"
           />
           <button type="button" id="submit">
             <img src="./icon/search.png" alt="Search City" width="25px" />
