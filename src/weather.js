@@ -2,10 +2,6 @@ import { lightFormat, add, format } from 'date-fns';
 
 const todayDate = lightFormat(new Date(), 'yyyy-MM-dd');
 const currentDay = format(todayDate, 'EEEE');
-const weekAfterTodayDate = lightFormat(
-  add(todayDate, { days: 7 }),
-  'yyyy-MM-dd'
-);
 
 class CityWeather {
   constructor(obj) {

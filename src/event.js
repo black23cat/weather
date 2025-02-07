@@ -15,17 +15,30 @@ export default function event() {
     e.preventDefault();
 
     if (search.value !== '') {
+      toggleLoadingAnimation('start');
       getWeather(search.value)
         .then((result) => {
           const data = result;
           dom.updateScreen(data, content);
+          toggleLoadingAnimation('stop');
         })
         .catch(() => {
           alert('Ooopss');
+          toggleLoadingAnimation('stop');
         });
       form.reset();
     }
   }
+
+  function toggleLoadingAnimation(status) {
+    const spinner = document.querySelector('span div.spinner');
+    if (status === 'start') {
+      spinner.className = 'spinner active';
+    } else {
+      spinner.className = 'spinner';
+    }
+  }
+
   getWeather('Jakarta').then((result) => {
     const data = result;
     dom.updateScreen(data, content);

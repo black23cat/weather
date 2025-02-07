@@ -17,6 +17,7 @@ export default function Dom() {
     const tempWrapper = document.createElement('div');
     const mainWeatherIcon = document.createElement('img');
     const mainTemp = document.createElement('p');
+    const mainTempUnit = document.createElement('span');
     const lowHighTemp = document.createElement('p');
     const paraWrapper = document.createElement('div');
     const weatherConditionPara = document.createElement('p');
@@ -39,13 +40,15 @@ export default function Dom() {
     mainWeatherIcon.src = icon.getIcon(obj.icon);
     mainWeatherIcon.setAttribute('class', 'main-icon');
     mainTemp.textContent = `${obj.temp} \u00B0`;
-    mainTemp.setAttribute('class', 'main-temp');
+    mainTemp.setAttribute('class', 'main-temp temp');
+    mainTempUnit.textContent = 'C';
     weatherConditionPara.textContent = `${obj.currentCondition}.`;
     lowHighTemp.textContent = `${obj.lowTemp} \u00B0 / ${obj.highTemp} \u00B0 `;
-    lowHighTemp.setAttribute('class', 'low-high-temp');
+    lowHighTemp.setAttribute('class', 'low-high-temp temp');
     paraWrapper.setAttribute('class', 'detail-para-wrapper');
     weatherDetailWrapper.setAttribute('class', 'weather-detail');
     tempFeelsLike.textContent = `Feelslike ${obj.tempFeelsLike} \u00B0`;
+    tempFeelsLike.setAttribute('class', 'temp');
     rainChance.innerHTML = `Rain Chance ${obj.rainChance}%`;
     rainCover.innerHTML = `Rain Cover ${obj.rainCover}%`;
     uvIndex.innerHTML = `UV Index ${obj.uvIndex}`;
@@ -54,6 +57,7 @@ export default function Dom() {
     description.textContent = `${obj.description}`;
 
     // appending all element to wrapper and returning the wrapper
+    mainTemp.append(mainTempUnit);
     weatherHeader.append(city, daysAndDate);
     tempWrapper.append(mainTemp, lowHighTemp);
     paraWrapper.append(weatherConditionPara, description);
@@ -64,12 +68,12 @@ export default function Dom() {
       rainCover,
       uvIndex,
       sunrise,
-      sunset,
+      sunset
     );
     wrapper.append(
       weatherHeader,
       weatherConditionWrapper,
-      weatherDetailWrapper,
+      weatherDetailWrapper
     );
 
     return wrapper;
@@ -87,6 +91,7 @@ export default function Dom() {
       const time = document.createElement('p');
       hourlyCardWrapper.setAttribute('class', 'hourly-forecast-card');
       temp.textContent = `${hour.temp}\u00B0`;
+      temp.setAttribute('class', 'temp card');
       weatherConditionIcon.src = icon.getIcon(hour.icon);
       weatherConditionPara.textContent = `${hour.description}`;
       time.textContent = `${hour.datetime.slice(0, 5)}`;
@@ -94,7 +99,7 @@ export default function Dom() {
         time,
         weatherConditionIcon,
         temp,
-        weatherConditionPara,
+        weatherConditionPara
       );
       hourlyDetailWrapper.append(hourlyCardWrapper);
     });
@@ -106,7 +111,7 @@ export default function Dom() {
     parentNode.textContent = '';
     parentNode.append(
       generateMainWeatherInfo(obj),
-      generateHourlyHighlight(obj),
+      generateHourlyHighlight(obj)
     );
   }
   return { updateScreen };
