@@ -80,8 +80,12 @@ export default function Dom() {
   }
 
   function generateHourlyHighlight(obj) {
+    const hourlyForecastHeader = document.createElement('h1');
     const hourlyDetailWrapper = document.createElement('div');
+    hourlyForecastHeader.textContent = 'Hourly Forecast';
     hourlyDetailWrapper.setAttribute('class', 'hourly-forecast-wrapper');
+    hourlyDetailWrapper.appendChild(hourlyForecastHeader);
+
     const hourlyDetail = obj.hourlyForecast;
     hourlyDetail.forEach((hour) => {
       const hourlyCardWrapper = document.createElement('div');

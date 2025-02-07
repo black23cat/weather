@@ -164,10 +164,17 @@ div.main-weather-info .weather-detail{
 .hourly-forecast-wrapper {
   margin: 20px auto;
   display: grid;
-
+  grid-template-rows: 50px auto;
   grid-auto-flow: column;
   gap: 20px;
 
+}
+
+.hourly-forecast-wrapper h1{
+ text-align: left;
+ padding-left: 10px;
+  grid-area: 1/ 1/ 2 / 13;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 .hourly-forecast-card{
