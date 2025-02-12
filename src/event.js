@@ -5,29 +5,32 @@ export default function event() {
   const getWeather = getWeatherData;
   const dom = Dom();
   const form = document.querySelector('form');
-  const search = document.getElementById('search');
   const content = document.querySelector('.content');
-  form.addEventListener('click', formHandler);
+  form.addEventListener('submit', formHandler);
 
   function formHandler(e) {
-    // add form validation to search input to only accept min 3 character length
+    // add form validation to search input to only accept min 1 character length
     // enter button should submit the seach form instead reseting form
-    e.preventDefault();
 
-    if (search.value !== '') {
+    const searchValue = document.getElementById('search').value;
+
+    if (searchValue !== '') {
       toggleLoadingAnimation('start');
-      getWeather(search.value)
+      getWeather(searchValue)
         .then((result) => {
           const data = result;
           dom.updateScreen(data, content);
           toggleLoadingAnimation('stop');
         })
         .catch(() => {
-          alert('Ooopss');
+          alert(`Ooopss "${searchValue}" not found`);
           toggleLoadingAnimation('stop');
         });
-      form.reset();
+    } else {
+      alert('Enter a City first!');
     }
+    form.reset();
+    e.preventDefault();
   }
 
   function toggleLoadingAnimation(status) {
@@ -39,6 +42,7 @@ export default function event() {
     }
   }
 
+  //Initial load weather data
   getWeather('Jakarta').then((result) => {
     const data = result;
     dom.updateScreen(data, content);
